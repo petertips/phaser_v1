@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var juego = new Phaser.Game(370, 550, Phaser.CANVAS, 'bloque_juego');
+
+    var estadoPrincipal = {
+        preload:function(){
+            //carga de todos los recursos.
+            juego.stage.backgroundColor="#000";
+            juego.load.image('fondo','img/bg.jpeg');
+        },
+        create:function () {
+            //mostrar en pantalla.
+            juego.add.tileSprite(0,0,370,550,'fondo');
+        },
+        update:function () {
+            //Animaciones del juewgo
+        }
+    };
+    juego.state.add('principal',estadoPrincipal);
+    juego.state.start('principal');
+</script>
+<div id="bloque_juego"></div>
+</body>
+</html>
