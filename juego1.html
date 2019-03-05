@@ -7,6 +7,10 @@
 </head>
 <body>
 <script>
+    var fondoJuego;
+    var boton;
+    var flappy;
+
     var juego = new Phaser.Game(370, 550, Phaser.CANVAS, 'bloque_juego');
 
     var estadoPrincipal = {
@@ -14,13 +18,34 @@
             //carga de todos los recursos.
             juego.stage.backgroundColor="#000";
             juego.load.image('fondo','img/bg.jpeg');
+
+            juego.load.image('pajaro','img/pajaro1.png')
+
+            juego.load.image('btn','img/btn.png')
         },
         create:function () {
             //mostrar en pantalla.
-            juego.add.tileSprite(0,0,370,550,'fondo');
+            fondoJuego = juego.add.tileSprite(0,0,370,550,'fondo');
+
+            ///*     DEJAR IMAGEN AL CENTRO       */
+            //juego.add.sprite(0,0,'pajaro');
+            //boton = juego.add.sprite(juego.width/2, juego.height/2, 'btn');
+            //boton.anchor.setTo(0.5);
+
+            /*     CAMBIAR TAMAÑO (Escalar IMAGEN)    */
+            flappy = juego.add.sprite(juego.width/2, juego.height/2,'pajaro');
+            flappy.anchor.setTo(0.5);
+            flappy.scale.setTo(1,1);
+
+            /* FLIP A IMAGEN, (rotar imagen)   */
+            flappy.scale.setTo(-1,1);
+
+
+
         },
         update:function () {
-            //Animaciones del juewgo
+            //Animaciones del juego
+            //fondoJuego.tilePosition.x -= 1;
         }
     };
     juego.state.add('principal',estadoPrincipal);
