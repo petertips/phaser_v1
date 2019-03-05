@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
+
+    <title>Title</title>
+</head>
+<body>
+<script>
+   var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        backgroundColor: 'rgba(68, 136, 170, 0.5)',
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 200 }
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create,
+            update: update
+        }
+    };
+
+
+    var game = new Phaser.Game(config);
+
+    function preload ()
+    {
+        this.load.image("base", "metalofono/img/base01.png");
+        this.load.image("met_01","metalofono/img/met_01.png");
+        this.load.image("met_02","metalofono/img/met_02.png");
+        this.load.image("met_03","metalofono/img/met_03.png");
+        this.load.image("met_04","metalofono/img/met_04.png");
+        this.load.image("met_05","metalofono/img/met_05.png");
+        this.load.image("met_06","metalofono/img/met_06.png");
+        this.load.image("met_07","metalofono/img/met_07.png");
+        this.load.image("met_08","metalofono/img/met_08.png");
+        this.load.image("met_09","metalofono/img/met_09.png");
+        this.load.image("met_10","metalofono/img/met_10.png");
+
+        this.load.audio("nota_01",["metalofono/notas/1_ROJO_DO.mp3"]);
+        this.load.audio("nota_02",["metalofono/notas/2_NARANJA_RE.mp3"]);
+        this.load.audio("nota_03",["metalofono/notas/3_AMARILLO_MI.mp3"]);
+        this.load.audio("nota_04",["metalofono/notas/4_VERDE_FA.mp3"]);
+        this.load.audio("nota_05",["metalofono/notas/5_AZUL_SOL.mp3"]);
+        this.load.audio("nota_06",["metalofono/notas/6_LILA_LA.mp3"]);
+        this.load.audio("nota_07",["metalofono/notas/7_BLANCO_SI.mp3"]);
+        this.load.audio("nota_08",["metalofono/notas/8_ROJO_DO.mp3"]);
+        this.load.audio("nota_09",["metalofono/notas/9_NARANJA_RE.mp3"]);
+        this.load.audio("nota_10",["metalofono/notas/10_AMARILLO_MI.mp3"]);
+        this.load.audio("nota_11",["metalofono/notas/11_SILENCIO.mp3"]);
+
+        this.load.image("sprLaserEnemy0", "metalofono/img/sprLaserEnemy0.png");
+    }
+
+    var tecla_do,tecla_re,tecla_mi,tecla_fa,tecla_sol,tecla_la,tecla_si,tecla_do1,tecla_re1,tecla_mi1;
+    var keyDO,keyRE,keyMI,keyFA,keySOL,keyLA,keySI,keyDO1,keyRE1,keyMI1;
+    var nota_do,nota_re,nota_mi,nota_fa,nota_sol,nota_la,nota_si,nota_do1,nota_re1,nota_mi1,nota_sil;
+
+    function create ()
+    {
+
+        this.add.image(400, 300, "base");
+
+        scoreText = this.add.text(5, 5, "Points: 0", { font: '18px Arial', fill: '#0095DD' });
+
+        tecla_do = this.add.sprite(170,302,"met_01");
+
+        tecla_re = this.add.sprite(220,302,"met_02");
+        tecla_mi = this.add.sprite(270,302,"met_03");
+        tecla_fa = this.add.sprite(320,302,"met_04");
+        tecla_sol = this.add.sprite(370,302,"met_05");
+        tecla_la = this.add.sprite(420,302,"met_06");
+        tecla_si = this.add.sprite(470,302,"met_07");
+        tecla_do1 = this.add.sprite(520,302,"met_08");
+        tecla_re1 = this.add.sprite(570,302,"met_09");
+        tecla_mi1 = this.add.sprite(620,302,"met_10");
+
+        nota_do = game.sound.add("nota_01");
+        nota_re = game.sound.add("nota_02");
+        nota_mi = game.sound.add("nota_03");
+        nota_fa = game.sound.add("nota_04");
+        nota_sol = game.sound.add("nota_05");
+        nota_la = game.sound.add("nota_06");
+        nota_si = game.sound.add("nota_07");
+        nota_do1 = game.sound.add("nota_08");
+        nota_re1 = game.sound.add("nota_09");
+        nota_mi1 = game.sound.add("nota_10");
+        nota_sil = game.sound.add("nota_11");
+
+        this.input.enabled = true;
+        keyDO = this.input.keyboard.addKey('NUMPAD_ONE');
+        keyRE = this.input.keyboard.addKey('NUMPAD_TWO');
+        keyMI = this.input.keyboard.addKey('NUMPAD_THREE');
+        keyFA = this.input.keyboard.addKey('NUMPAD_FOUR');
+        keySOL = this.input.keyboard.addKey('NUMPAD_FIVE');
+        keyLA = this.input.keyboard.addKey('NUMPAD_SIX');
+        keySI = this.input.keyboard.addKey('NUMPAD_SEVEN');
+        keyDO1 = this.input.keyboard.addKey('NUMPAD_EIGHT');
+        keyRE1 = this.input.keyboard.addKey('NUMPAD_NINE');
+        keyMI1 = this.input.keyboard.addKey('NUMPAD_ZERO');
+
+    }
+
+    function update() {
+        if (keyDO.isDown) {
+            nota_do.play();
+        }
+        if (keyRE.isDown){ nota_re.play(); }
+        if (keyMI.isDown){ nota_mi.play(); }
+        if (keyFA.isDown){ nota_fa.play(); }
+        if (keySOL.isDown){ nota_sol.play(); }
+        if (keyLA.isDown){ nota_la.play(); }
+        if (keySI.isDown){ nota_si.play(); }
+        if (keyDO1.isDown){ nota_do1.play(); }
+        if (keyRE1.isDown){ nota_re1.play(); }
+        if (keyMI1.isDown){ nota_mi1.play(); }
+    }
+
+</script>
+</body>
+</html>
