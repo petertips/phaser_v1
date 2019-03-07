@@ -17,6 +17,8 @@
 
     var cursores;
 
+    var mirando="arriba";
+
     var juego = new Phaser.Game(370, 550, Phaser.CANVAS, 'bloque_juego');
 
     var estadoPrincipal = {
@@ -98,28 +100,57 @@
             //    flappy.position.x += 1;
             //}
 
+
             /* 8 validar las teclas de flechas */
             if (cursores.right.isDown){
                 persona.position.x += 2;
                 persona.animations.play('derecha');
                 //flappy.position.x += 1;
+
+                /* DETENER ANIMACION */
+                if (mirando != "derecha"){
+                    mirando="derecha";
+                }
             }
-            if (cursores.left.isDown){
+            else if (cursores.left.isDown){
                 persona.position.x -= 2;
                 persona.animations.play('izquierda');
                 //flappy.position.x -= 1;
+
+                /* DETENER ANIMACION */
+                if (mirando != "izquierda"){
+                    mirando="izquierda";
+                }
             }
-            if (cursores.up.isDown){
+            else if (cursores.up.isDown){
                 persona.position.y -= 2;
                 persona.animations.play('arriba');
                 //flappy.position.y -= 1;
+
+                /* DETENER ANIMACION */
+                if (mirando != "arriba"){
+                    mirando="arriba";
+                }
             }
-            if (cursores.down.isDown){
+            else if (cursores.down.isDown){
                 persona.position.y += 2;
                 persona.animations.play('abajo');
                 //flappy.position.y +=1;
+
+                /* DETENER ANIMACION */
+                if (mirando != "abajo"){
+                    mirando="abajo";
+                }
+            }
+            else{
+                /* DETENER ANIMACION */
+                if (mirando != "espera"){
+                    persona.animations.stop();
+                }
+                mirando="espera";
             }
             /* 8 FIN */
+
         }
     };
     juego.state.add('principal',estadoPrincipal);
