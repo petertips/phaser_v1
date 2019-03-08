@@ -77,6 +77,7 @@ var Juego={
         tecla_do.enableBody=true;
         //tecla_do.physicsBodyType=Phaser.Physics.ARCADE;
         juego.physics.enable(tecla_do, Phaser.Physics.ARCADE);
+        //juego.physics.enable( [ circulos_01, tecla_do ], Phaser.Physics.ARCADE);
         tecla_do.body.setSize(42,259, 0, 60);
         tecla_do.body.immovable = true;
 
@@ -181,6 +182,7 @@ var Juego={
         circulos_01.setAll('outOfBoundsKill', true); // Destruir al salir del escenario (limite del juego).
         circulos_01.setAll('checkWorldBounds',true); // Para que este siempre dentro del limite del juego.
 
+
     },
     update:function () {
         //juego.debug.bodyInfo(tecla_do, 16, 24);
@@ -198,7 +200,7 @@ var Juego={
             //tiempoBala = juego.time.now + 400; //Milisegundos.
         }
 
-        juego.physics.arcade.overlap(tecla_do,circulos_01,this.colisionCirculo_01,null,this); //DETECTAR COLISIONES
+        juego.physics.arcade.collide(tecla_do,circulos_01,this.colisionCirculo_01,null,this); //DETECTAR COLISIONES
 
 
     },
