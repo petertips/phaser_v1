@@ -25,18 +25,8 @@
             update: update
         }
     };
-
     var game = new Phaser.Game(800, 600, Phaser.AUTO, 'arcade', {preload: preload, create: create, update: update});
-
     var starfield;
-
-    function create() {
-
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-
-        //  The scrolling starfield background
-        starfield = game.add.tileSprite(0, 0, 800, 600, 'base');
-    }
 
     function preload ()
     {
@@ -51,7 +41,6 @@
         game.load.image("met_08","metalofono/img/met_08.png");
         game.load.image("met_09","metalofono/img/met_09.png");
         game.load.image("met_10","metalofono/img/met_10.png");
-
         game.load.audio("nota_01","metalofono/notas/1_ROJO_DO.mp3");
         game.load.audio("nota_02","metalofono/notas/2_NARANJA_RE.mp3");
         game.load.audio("nota_03","metalofono/notas/3_AMARILLO_MI.mp3");
@@ -63,66 +52,54 @@
         game.load.audio("nota_09","metalofono/notas/9_NARANJA_RE.mp3");
         game.load.audio("nota_10","metalofono/notas/10_AMARILLO_MI.mp3");
         game.load.audio("nota_11","metalofono/notas/11_SILENCIO.mp3");
-
         game.load.image("sprLaserEnemy0", "metalofono/img/sprLaserEnemy0.png");
     }
-
     var tecla_do,tecla_re,tecla_mi,tecla_fa,tecla_sol,tecla_la,tecla_si,tecla_do1,tecla_re1,tecla_mi1;
     var keyDO,keyRE,keyMI,keyFA,keySOL,keyLA,keySI,keyDO1,keyRE1,keyMI1;
     var nota_do,nota_re,nota_mi,nota_fa,nota_sol,nota_la,nota_si,nota_do1,nota_re1,nota_mi1,nota_sil;
-
     function create ()
     {
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        //  The scrolling starfield background
+        starfield = game.add.tileSprite(0, 0, 800, 600, 'base');
+
         game.stage.backgroundColor = 'rgba(68, 136, 170, 0.5)';
 
         sprite = game.add.sprite(390,302,"base");
         sprite.anchor.setTo(0.5, 0.5);
         game.physics.enable(sprite, Phaser.Physics.ARCADE);
-
         //sprite = game.add.sprite(400, 300, "base");
-
         scoreText = game.add.text(5, 5, "Points: 0", { font: '18px Arial', fill: '#0095DD' });
-
         tecla_do = game.add.sprite(170,302,"met_01");
         tecla_do.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_do, Phaser.Physics.ARCADE);
-
         tecla_re = this.add.sprite(220,302,"met_02");
         tecla_re.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_re, Phaser.Physics.ARCADE);
-
         tecla_mi = this.add.sprite(270,302,"met_03");
         tecla_mi.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_mi, Phaser.Physics.ARCADE);
-
         tecla_fa = this.add.sprite(320,302,"met_04");
         tecla_fa.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_fa, Phaser.Physics.ARCADE);
-
         tecla_sol = this.add.sprite(370,302,"met_05");
         tecla_sol.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_sol, Phaser.Physics.ARCADE);
-
         tecla_la = this.add.sprite(420,302,"met_06");
         tecla_la.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_la, Phaser.Physics.ARCADE);
-
         tecla_si = this.add.sprite(470,302,"met_07");
         tecla_si.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_si, Phaser.Physics.ARCADE);
-
         tecla_do1 = this.add.sprite(520,302,"met_08");
         tecla_do1.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_do1, Phaser.Physics.ARCADE);
-
         tecla_re1 = this.add.sprite(570,302,"met_09");
         tecla_re1.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_re1, Phaser.Physics.ARCADE);
-
         tecla_mi1 = this.add.sprite(620,302,"met_10");
         tecla_mi1.anchor.setTo(0.5, 0.5);
         game.physics.enable(tecla_mi1, Phaser.Physics.ARCADE);
-
         nota_do = game.add.audio("nota_01");
         nota_re = game.add.audio("nota_02");
         nota_mi = game.add.audio("nota_03");
@@ -134,18 +111,14 @@
         nota_re1 = game.add.audio("nota_09");
         nota_mi1 = game.add.audio("nota_10");
         nota_sil = game.add.audio("nota_11");
-
         //keys = game.input.keyboard.addKeys({ nota_do: 97, nota_re: Phaser.Keyboard.TWO, nota_mi: Phaser.Keyboard.THREE });
         keys1 = game.input.keyboard.addKeys({ nota_do: 97, nota_re: 98, nota_mi: 99 });
-
         keys1.nota_do.onDown.add(playFx, this);
         keys1.nota_re.onDown.add(playFx, this);
         keys1.nota_mi.onDown.add(playFx, this);
     }
     function update(){
-
     }
-
     function playFx(key) {
         switch (key.keyCode)
         {
