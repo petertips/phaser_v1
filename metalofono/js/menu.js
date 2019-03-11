@@ -1,8 +1,8 @@
 var Menu = {
 
     preload: function(){
-        juego.stage.backgroundColor = '#FFF';
-        juego.load.image('boton', 'img/btn.png');
+        juego.stage.backgroundColor = 'rgba(193, 193, 193, 0.5)';
+        juego.load.image('boton', '../img/btn.png');
     },
 
     create: function(){

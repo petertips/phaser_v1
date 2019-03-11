@@ -3,11 +3,10 @@ var bg;
 var tecla_do,tecla_re,tecla_mi,tecla_fa,tecla_sol,tecla_la,tecla_si,tecla_do1,tecla_re1,tecla_mi1;
 var tecla_do_click,tecla_re_click,tecla_mi_click,tecla_fa_click,tecla_sol_click,tecla_la_click,tecla_si_click,tecla_do1_click,tecla_re1_click,tecla_mi1_click;
 
-var nota_do,nota_re,nota_mi,nota_fa,nota_sol,nota_la,nota_si,nota_do1,nota_re1,nota_mi1,nota_sil;
+var nota_do,nota_re,nota_mi,nota_fa,nota_sol,nota_la,nota_si,nota_do1,nota_re1,nota_mi1;
 var shake;
 
 var circulos_00,circulos_01,circulos_02,circulos_03,circulos_04,circulos_05,circulos_06,circulos_07,circulos_08,circulos_09,circulos_10;
-var timer;
 
 var Juego;
 
@@ -16,6 +15,9 @@ var txtPuntos;
 
 var guias;
 
+var tiempos=[1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30];
+var cancion=[3,5,3,0,3, 5, 4, 0, 4, 5, 4, 5, 4, 5, 3, 0];
+var ms=500;
 
 Juego = {
     CERO: Phaser.Key,
@@ -39,53 +41,12 @@ Juego = {
     NUEVE: Phaser.Key,
     numpadNUEVE: Phaser.Key,
     preload: function () {
-        shake = new Phaser.Plugin.Shake(juego);
-
-        juego.load.image("base", "img/base01.png");
-        juego.load.image("met_01", "img/met_01.png");
-        juego.load.image("met_02", "img/met_02.png");
-        juego.load.image("met_03", "img/met_03.png");
-        juego.load.image("met_04", "img/met_04.png");
-        juego.load.image("met_05", "img/met_05.png");
-        juego.load.image("met_06", "img/met_06.png");
-        juego.load.image("met_07", "img/met_07.png");
-        juego.load.image("met_08", "img/met_08.png");
-        juego.load.image("met_09", "img/met_09.png");
-        juego.load.image("met_10", "img/met_10.png");
-
-        juego.load.image("guia", "img/0.png");
-
-        juego.load.audio("nota_01", "notas/1_ROJO_DO.mp3");
-        juego.load.audio("nota_02", "notas/2_NARANJA_RE.mp3");
-        juego.load.audio("nota_03", "notas/3_AMARILLO_MI.mp3");
-        juego.load.audio("nota_04", "notas/4_VERDE_FA.mp3");
-        juego.load.audio("nota_05", "notas/5_AZUL_SOL.mp3");
-        juego.load.audio("nota_06", "notas/6_LILA_LA.mp3");
-        juego.load.audio("nota_07", "notas/7_BLANCO_SI.mp3");
-        juego.load.audio("nota_08", "notas/8_ROJO_DO.mp3");
-        juego.load.audio("nota_09", "notas/9_NARANJA_RE.mp3");
-        juego.load.audio("nota_10", "notas/10_AMARILLO_MI.mp3");
-        //juego.load.audio("nota_11", "notas/11_SILENCIO.mp3");
-
-        juego.load.image('circulo_00', 'img/0.png');
-        juego.load.image('circulo_01', 'img/1.png');
-        juego.load.image('circulo_02', 'img/2.png');
-        juego.load.image('circulo_03', 'img/3.png');
-        juego.load.image('circulo_04', 'img/4.png');
-        juego.load.image('circulo_05', 'img/5.png');
-        juego.load.image('circulo_06', 'img/6.png');
-        juego.load.image('circulo_07', 'img/7.png');
-        juego.load.image('circulo_08', 'img/8.png');
-        juego.load.image('circulo_09', 'img/9.png');
-        juego.load.image('circulo_10', 'img/10.png');
-
-        juego.forceSingleUpdate = true;
+        juego.stage.backgroundColor = 'rgba(68, 136, 170, 0.5)';
     },
     create: function () {
         juego.physics.startSystem(Phaser.Physics.ARCADE);
 
         //starfield = juego.add.tileSprite(0, 0, 800, 600, 'base'); //PARA PONER IMAGEN DE FONDO
-        juego.stage.backgroundColor = 'rgba(68, 136, 170, 0.5)';
 
         puntos=0;
         txtPuntos = juego.add.text(20, 20, "0", {font: "30px Arial", fill: "#FFF"});
@@ -94,6 +55,7 @@ Juego = {
         bg.anchor.setTo(0.5);
 
         this.crearTeclas();
+
 
         nota_do = juego.add.audio("nota_01");
         nota_re = juego.add.audio("nota_02");
@@ -105,7 +67,6 @@ Juego = {
         nota_do1 = juego.add.audio("nota_08");
         nota_re1 = juego.add.audio("nota_09");
         nota_mi1 = juego.add.audio("nota_10");
-        //nota_sil = juego.add.audio("nota_11");
 
         guias = juego.add.group();
         guias.enableBody = true;
@@ -120,9 +81,6 @@ Juego = {
         this.creaTeclado();
         this.crearCirculos();
 
-        var tiempos=[1,2,4,6,8,10,12,14];
-        var cancion=[3,5,3,0,3, 5, 4, 0];
-        var ms=500;
 
         for (var x=0;x<cancion.length;x++){
             switch (cancion[x]){
@@ -165,6 +123,10 @@ Juego = {
 
     },
     update: function () {
+        if (juego.time.events.length===0){
+            juego.time.events.add(3000, this.gameOver, this);
+        }
+        //alert(juego.state.getCurrentState());
         /*if (tecla_do.angle < 0) {
             tecla_do.angle += 1;
         }*/
@@ -215,6 +177,56 @@ Juego = {
 
             juego.physics.arcade.overlap(guias, circulos_05,this.colisionCirculo, null, this);
             tecla_sol_click=false;
+        }
+
+        if( (juego.physics.arcade.overlap(guias, circulos_06) && this.numpadSEIS.isDown) ||
+            (juego.physics.arcade.overlap(guias, circulos_06) && tecla_la_click === true ) ) { //DETECTAR COLISIONES
+            puntos +=1;
+            puntos +=1;
+            txtPuntos.text = puntos;
+
+            juego.physics.arcade.overlap(guias, circulos_06,this.colisionCirculo, null, this);
+            tecla_la_click=false;
+        }
+
+        if( (juego.physics.arcade.overlap(guias, circulos_07) && this.numpadSIETE.isDown) ||
+            (juego.physics.arcade.overlap(guias, circulos_07) && tecla_si_click === true ) ) { //DETECTAR COLISIONES
+            puntos +=1;
+            puntos +=1;
+            txtPuntos.text = puntos;
+
+            juego.physics.arcade.overlap(guias, circulos_07,this.colisionCirculo, null, this);
+            tecla_si_click=false;
+        }
+
+        if( (juego.physics.arcade.overlap(guias, circulos_08) && this.numpadOCHO.isDown) ||
+            (juego.physics.arcade.overlap(guias, circulos_08) && tecla_do_click === true ) ) { //DETECTAR COLISIONES
+            puntos +=1;
+            puntos +=1;
+            txtPuntos.text = puntos;
+
+            juego.physics.arcade.overlap(guias, circulos_08,this.colisionCirculo, null, this);
+            tecla_do_click=false;
+        }
+
+        if( (juego.physics.arcade.overlap(guias, circulos_09) && this.numpadNUEVE.isDown) ||
+            (juego.physics.arcade.overlap(guias, circulos_09) && tecla_re1_click === true ) ) { //DETECTAR COLISIONES
+            puntos +=1;
+            puntos +=1;
+            txtPuntos.text = puntos;
+
+            juego.physics.arcade.overlap(guias, circulos_09,this.colisionCirculo, null, this);
+            tecla_re1_click=false;
+        }
+
+        if( (juego.physics.arcade.overlap(guias, circulos_10) && this.numpadCERO.isDown) ||
+            (juego.physics.arcade.overlap(guias, circulos_10) && tecla_mi1_click === true ) ) { //DETECTAR COLISIONES
+            puntos +=1;
+            puntos +=1;
+            txtPuntos.text = puntos;
+
+            juego.physics.arcade.overlap(guias, circulos_10,this.colisionCirculo, null, this);
+            tecla_mi1_click=false;
         }
     },
     test:function (sprite, pointer) {
@@ -409,7 +421,7 @@ Juego = {
         circulos_00 = juego.add.group();
         circulos_00.enableBody = true;
         juego.physics.enable(circulos_00, Phaser.Physics.ARCADE);
-        circulos_00.createMultiple(20, 'circulo_00');
+        circulos_00.createMultiple(1, 'circulo_00');
         circulos_00.setAll('anchor.x', 0.5);
         circulos_00.setAll('anchor.y', 1);
         circulos_00.setAll('outOfBoundsKill', true); // Destruir al salir del escenario (limite del juego).
@@ -418,7 +430,7 @@ Juego = {
         circulos_01 = juego.add.group();
         circulos_01.enableBody = true;
         juego.physics.enable(circulos_01, Phaser.Physics.ARCADE);
-        circulos_01.createMultiple(20, 'circulo_01');
+        circulos_01.createMultiple(1, 'circulo_01');
         circulos_01.setAll('anchor.x', 0.5);
         circulos_01.setAll('anchor.y', 1);
         circulos_01.setAll('outOfBoundsKill', true); // Destruir al salir del escenario (limite del juego).
@@ -427,7 +439,7 @@ Juego = {
         circulos_02 = juego.add.group();
         circulos_02.enableBody = true;
         juego.physics.enable(circulos_02, Phaser.Physics.ARCADE);
-        circulos_02.createMultiple(20, 'circulo_02');
+        circulos_02.createMultiple(1, 'circulo_02');
         circulos_02.setAll('anchor.x', 0.5);
         circulos_02.setAll('anchor.y', 1);
         circulos_02.setAll('outOfBoundsKill', true);
@@ -464,7 +476,7 @@ Juego = {
         var circulo = circulos_00.getFirstDead();
         if (circulo) {
             circulo.reset(100, 0);
-            circulo.body.velocity.y = 100;
+            circulo.body.velocity.y = 120;
             circulo.checkWorldBounds=true;
             circulo.outOfBoundsKill=true;
         }
@@ -618,7 +630,23 @@ Juego = {
         //circulo.destroy();
         circulo.kill();
     },
+    gameOver: function() {
+        //pass it the score as a parameter
+        juego.state.start('Game_Over');
+    },
     render: function () {
+
+        //juego.debug.bodyInfo(tecla_do, 16, 24);
+
+
+
+        juego.debug.text("Elapsed seconds: " + juego.time.totalElapsedSeconds(), 32, 16);
+
+        juego.debug.text("Time until event: " + juego.time.events.duration.toFixed(0), 32, 32);
+        juego.debug.text("Next tick: " + juego.time.events.next.toFixed(0), 32, 64);
+        juego.debug.text("Queued events: " + juego.time.events.length, 32, 96);
+
+
         //juego.debug.bodyInfo(tecla_do, 16, 24);
         //juego.debug.text('One item will be resurrected every second', 32, 32);
         //juego.debug.text('Living: ' + circulos_01.countLiving() + '   Dead: ' + circulos_01.countDead(), 32, 64);

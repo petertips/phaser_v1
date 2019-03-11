@@ -1,7 +1,7 @@
 var Game_Over = {
 
     preload: function(){
-        juego.stage.backgroundColor = '#FFF';
+        juego.stage.backgroundColor = 'rgba(83, 255, 0, 0.5)';
         juego.load.image('boton', 'img/btn.png');
     },
 
