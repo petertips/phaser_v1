@@ -39,7 +39,7 @@ Play = {
 
             lineasNegras.create(fila,125, 'lineanegra');
 
-            linea=lineas.create(fila,275, 'linea');
+            linea=lineas.create(fila,313, 'linea');
             linea.name = 'linea' + (x);
 
             fichas.create(fila,113, 'ficha');

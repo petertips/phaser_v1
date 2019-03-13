@@ -364,6 +364,7 @@ Juego = {
         juego.physics.enable(tacla, Phaser.Physics.ARCADE);
         tacla.body.immovable = true;
         tacla.inputEnabled = true;
+        tacla.input.useHandCursor = true;
         tacla.events.onInputDown.add(this.clickMouse, this);
         tacla.allowGravity = false;
         tacla.draggable = false;

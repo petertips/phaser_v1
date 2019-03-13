@@ -1,6 +1,3 @@
-
-var logo;
-
 //  The Google WebFont Loader will look for this object, so create it before loading the script.
 WebFontConfig = {
     //  The Google Fonts we want to load (specify as many as you like in the array)
@@ -8,6 +5,7 @@ WebFontConfig = {
         families: ['Fontdiner Swanky']
     }
 };
+var cargando,logo,cargando_txt;
 
 var Loading = {
     preload: function(){
@@ -16,7 +14,12 @@ var Loading = {
 
         juego.stage.backgroundColor = '#000000';
 
-        juego.load.image('logo', 'img/iconoweb.png');
+        juego.load.image('cito', 'img/cargando_cito.png');
+        juego.load.image('cargando_bg', 'img/cargando_bg.jpg');
+        juego.load.image('cargando_txt', 'img/cargando_txt.png');
+
+        juego.load.image('demo', 'img/demo_item.png');
+        juego.load.image('play', 'img/play_item.png');
 
         shake = new Phaser.Plugin.Shake(juego);
 
@@ -81,20 +84,19 @@ var Loading = {
     },
 
     create: function(){
-        juego.stage.backgroundColor = '#1589FF';
-
-        logo = juego.add.sprite(juego.world.width/2, juego.world.height/2, 'logo');
+        cargando = juego.add.tileSprite(0, 0, 750, 450 , 'cargando_bg');
+        logo = juego.add.sprite(juego.world.width/2, juego.world.height/2-80, 'cito');
         logo.anchor.set(0.5);
-        var txtCargando = juego.add.text(juego.width/2, juego.height/2 - 125, "CARGANDO...", {font: "bold 30px sans-serif", fill:"black", align:"center"});
-        txtCargando.anchor.setTo(0.5);
+        cargando_txt =  juego.add.sprite(juego.world.width/2, juego.world.height/2 + 50, 'cargando_txt');
+        cargando_txt.anchor.set(0.5);
 
         //A simple fade out effect
         juego.time.events.add(Phaser.Timer.SECOND, function() {
-            var tween = this.add.tween(logo).to({alpha: 0}, 900, Phaser.Easing.Linear.none);
+            var tween = this.add.tween(cargando_txt).to({alpha: 0}, 900, Phaser.Easing.Linear.none);
 
             tween.onComplete.add(function() {
-                this.add.tween(txtCargando).to({alpha: 0}, 200, Phaser.Easing.Linear.none);
                 logo.destroy();
+                cargando_txt.destroy();
                 this.startGame();
             }, this);
 
