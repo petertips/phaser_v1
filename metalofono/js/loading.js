@@ -10,6 +10,7 @@ var Loading = {
         shake = new Phaser.Plugin.Shake(juego);
 
         juego.load.image("base", "img/base01.png");
+
         juego.load.image("met_01", "img/met_01.png");
         juego.load.image("met_02", "img/met_02.png");
         juego.load.image("met_03", "img/met_03.png");
@@ -22,6 +23,7 @@ var Loading = {
         juego.load.image("met_10", "img/met_10.png");
 
         juego.load.image("guia", "img/0.png");
+        juego.load.image("linea", "img/linea.png");
 
         juego.load.audio("nota_01", "notas/1_ROJO_DO.mp3");
         juego.load.audio("nota_02", "notas/2_NARANJA_RE.mp3");
@@ -48,6 +50,10 @@ var Loading = {
         juego.load.image('circulo_10', 'img/10.png');
 
         juego.forceSingleUpdate = true;
+
+        juego.load.image('diamante','img/diamond.png');
+        juego.load.image('estrella','img/star.png');
+        juego.load.image('particula','img/star_particle.png');
     },
 
     create: function(){
