@@ -2,28 +2,31 @@
 WebFontConfig = {
     //  The Google Fonts we want to load (specify as many as you like in the array)
     google: {
-        families: ['Fontdiner Swanky']
+        families: ['Changa One']
     }
 };
 var cargando,logo,cargando_txt;
 
-var Loading = {
-    preload: function(){
+var PreloadState={
+    preload:function () {
+
+
         //  Load the Google WebFont Loader script
         juego.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-        juego.stage.backgroundColor = '#000000';
-
-        juego.load.image('cito', 'img/cargando_cito.png');
-        juego.load.image('cargando_bg', 'img/cargando_bg.jpg');
-        juego.load.image('cargando_txt', 'img/cargando_txt.png');
-
-        juego.load.image('demo', 'img/demo_item.png');
-        juego.load.image('play', 'img/play_item.png');
+        juego.load.image('demo', 'img/demo01.png');
+        juego.load.image('play', 'img/jugar01.png');
 
         shake = new Phaser.Plugin.Shake(juego);
 
         juego.load.image("base", "img/base.png");
+
+        juego.load.image("tapa_atras", "img/tapa_atras.png");
+        juego.load.image("juego_terminado", "img/juego_terminado.png");
+
+        juego.load.image("tooltip", "img/tooltip.png");
+
+        juego.load.image("volver", "img/volver.png");
 
         juego.load.image("met_01", "img/metal01.png");
         juego.load.image("met_02", "img/metal02.png");
@@ -36,7 +39,8 @@ var Loading = {
         juego.load.image("met_09", "img/metal09.png");
         juego.load.image("met_10", "img/metal10.png");
 
-        juego.load.image("ficha", "img/ficha_mueve.png");
+        juego.load.image("ficha", "img/ball_w.png");
+
         juego.load.image("guia0", "img/circ00.png");
         juego.load.image("guia1", "img/circ01.png");
         juego.load.image("guia2", "img/circ02.png");
@@ -64,46 +68,65 @@ var Loading = {
         //juego.load.audio("nota_11", "notas/11_SILENCIO.mp3");
 
         juego.load.image('circulo_00', 'img/ficha_mueve_nada.png');
-        juego.load.image('circulo_01', 'img/ficha_mueve.png');
-        juego.load.image('circulo_02', 'img/ficha_mueve.png');
-        juego.load.image('circulo_03', 'img/ficha_mueve.png');
-        juego.load.image('circulo_04', 'img/ficha_mueve.png');
-        juego.load.image('circulo_05', 'img/ficha_mueve.png');
-        juego.load.image('circulo_06', 'img/ficha_mueve.png');
-        juego.load.image('circulo_07', 'img/ficha_mueve.png');
-        juego.load.image('circulo_08', 'img/ficha_mueve.png');
-        juego.load.image('circulo_09', 'img/ficha_mueve.png');
-        juego.load.image('circulo_10', 'img/ficha_mueve.png');
+        juego.load.image('circulo_01', 'img/ball_w2.png');
+        juego.load.image('circulo_02', 'img/ball_w2.png');
+        juego.load.image('circulo_03', 'img/ball_w2.png');
+        juego.load.image('circulo_04', 'img/ball_w2.png');
+        juego.load.image('circulo_05', 'img/ball_w2.png');
+        juego.load.image('circulo_06', 'img/ball_w2.png');
+        juego.load.image('circulo_07', 'img/ball_w2.png');
+        juego.load.image('circulo_08', 'img/ball_w2.png');
+        juego.load.image('circulo_09', 'img/ball_w2.png');
+        juego.load.image('circulo_10', 'img/ball_w2.png');
 
         juego.forceSingleUpdate = true;
 
         juego.load.image('diamante','img/diamond.png');
-        juego.load.image('estrella','img/star.png');
+        //juego.load.image('estrella','img/star.png');
         juego.load.image('particula','img/star_particle.png');
         juego.load.image('particula_a','img/star_01.png');
     },
-
-    create: function(){
+    create:function () {
+        juego.stage.backgroundColor = '#FFF';
         cargando = juego.add.tileSprite(0, 0, 750, 450 , 'cargando_bg');
+
         logo = juego.add.sprite(juego.world.width/2, juego.world.height/2-80, 'cito');
         logo.anchor.set(0.5);
         cargando_txt =  juego.add.sprite(juego.world.width/2, juego.world.height/2 + 50, 'cargando_txt');
         cargando_txt.anchor.set(0.5);
+        //juego.load.setPreloadSprite(cargando_txt);
+
 
         //A simple fade out effect
-        juego.time.events.add(Phaser.Timer.SECOND, function() {
-            var tween = this.add.tween(cargando_txt).to({alpha: 0}, 900, Phaser.Easing.Linear.none);
+         juego.time.events.add(Phaser.Timer.SECOND, function() {
+             var tween = this.add.tween(cargando_txt).to({alpha: 0}, 900, Phaser.Easing.Linear.none);
 
-            tween.onComplete.add(function() {
-                logo.destroy();
-                cargando_txt.destroy();
-                this.startGame();
-            }, this);
+             tween.onComplete.add(function() {
+                 logo.destroy();
+                 cargando_txt.destroy();
+                 this.startGame();
+             }, this);
 
-            tween.start();
-        }, this);
+             tween.start();
+         }, this);
     },
     startGame: function() {
         this.state.start('Menu');
+    }
+};
+
+var BootState = {
+    init:function(){
+        //this.scale.scaleMode=Phaser.ScaleManager.SHOW_ALL;
+        //this.scale.pageAlignHorizontally=true;
+        //this.scale.pageAlignVertically=true;
     },
+    preload: function(){
+        juego.load.image('cito', 'img/cargando_cito.png');
+        juego.load.image('cargando_bg', 'img/cargando_bg.jpg');
+        juego.load.image('cargando_txt', 'img/cargando_txt.png');
+    },
+    create: function() {
+        juego.state.start('PreloadState');
+    }
 };

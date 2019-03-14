@@ -16,6 +16,9 @@ Play = {
     create: function () {
         juego.physics.startSystem(Phaser.Physics.ARCADE);
 
+        tapa_atras = juego.add.sprite(389, 262, 'tapa_atras');
+        tapa_atras.anchor.setTo(0.5);
+
         bg = juego.add.sprite(390, 180, 'base');
         bg.anchor.setTo(0.5);
 
@@ -307,43 +310,43 @@ Play = {
         switch (nota){
             case 1:
                 //juego.add.tween(tecla_do).to({angle:-1},100,Phaser.Easing.Bounce.Out,true).start();
-                shake.shake(5, tecla_do);
+                //shake.shake(5, tecla_do);
                 nota_do.play();
                 break;
             case 2:
-                shake.shake(5, tecla_re);
+                //shake.shake(5, tecla_re);
                 nota_re.play();
                 break;
             case 3:
-                shake.shake(5, tecla_mi);
+                //shake.shake(5, tecla_mi);
                 nota_mi.play();
                 break;
             case 4:
-                shake.shake(5, tecla_fa);
+                //shake.shake(5, tecla_fa);
                 nota_fa.play();
                 break;
             case 5:
-                shake.shake(5, tecla_sol);
+                //shake.shake(5, tecla_sol);
                 nota_sol.play();
                 break;
             case 6:
-                shake.shake(5, tecla_la);
+                //shake.shake(5, tecla_la);
                 nota_la.play();
                 break;
             case 7:
-                shake.shake(5, tecla_si);
+                //shake.shake(5, tecla_si);
                 nota_si.play();
                 break;
             case 8:
-                shake.shake(5, tecla_do1);
+                //shake.shake(5, tecla_do1);
                 nota_do1.play();
                 break;
             case 9:
-                shake.shake(5, tecla_re1);
+                //shake.shake(5, tecla_re1);
                 nota_re1.play();
                 break;
             case 10:
-                shake.shake(5, tecla_mi1);
+                //shake.shake(5, tecla_mi1);
                 nota_mi1.play();
                 break;
         }

@@ -48,7 +48,7 @@ Juego = {
 
 
         emitter = juego.add.emitter(40, 80, 20);
-        emitter.makeParticles(['diamante','particula','estrella'])
+        emitter.makeParticles(['diamante','particula'])
 
         bg = juego.add.sprite(390, 410, 'base');
         bg.anchor.setTo(0.5);

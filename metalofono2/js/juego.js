@@ -1,5 +1,5 @@
 var Juego;
-var bg;
+var bg, tapa_atras,tooltip;
 var tecla_do,tecla_re,tecla_mi,tecla_fa,tecla_sol,tecla_la,tecla_si,tecla_do1,tecla_re1,tecla_mi1;
 var tecla_do_click,tecla_re_click,tecla_mi_click,tecla_fa_click,tecla_sol_click,tecla_la_click,tecla_si_click,tecla_do1_click,tecla_re1_click,tecla_mi1_click;
 var nota_do,nota_re,nota_mi,nota_fa,nota_sol,nota_la,nota_si,nota_do1,nota_re1,nota_mi1;
@@ -9,6 +9,8 @@ var puntos, txtPuntos_0,txtPuntos_1,txtPuntos_2,txtTitulo;
 
 var guias,fichas,lineasNegras;
 
+/*var tiempos=[1];
+var cancion=[1];*/
 var tiempos=[
     1,2,3,4,
     5,6,7,8,
@@ -73,7 +75,7 @@ var cancion=[
 ];
 var ms=600;
 var velicidad=120;
-var titulo="TITULO DE LA CANCIÓN CANCIÓN CANCIÓN CANCIÓN";
+var titulo="TITULO DE LA CANCIÓN CANCIÓN";
 
 var bueno,buenoPuntos;
 Juego = {
@@ -98,15 +100,21 @@ Juego = {
     NUEVE: Phaser.Key,
     numpadNUEVE: Phaser.Key,
     preload: function () {
-        juego.stage.backgroundColor = 'rgba(68, 136, 170, 0.5)';
+        juego.stage.backgroundColor = '#FFF';
     },
     create: function () {
         juego.physics.startSystem(Phaser.Physics.ARCADE);
 
         //starfield = juego.add.tileSprite(0, 0, 800, 600, 'base'); //PARA PONER IMAGEN DE FONDO
 
+        tapa_atras = juego.add.sprite(389, 262, 'tapa_atras');
+        tapa_atras.anchor.setTo(0.5);
+
         bg = juego.add.sprite(390, 180, 'base');
         bg.anchor.setTo(0.5);
+
+        tooltip = juego.add.sprite(50, 65, 'tooltip');
+        tooltip.anchor.setTo(0.5);
 
         this.cargarNotas();
         this.crearTeclas();
@@ -168,7 +176,8 @@ Juego = {
                     break;
             }
         }
-        juego.plugins.add(shake); // VIBRACION
+        //juego.plugins.add(shake); // VIBRACION
+
 
         juego.world.bringToTop(bg);
         juego.world.bringToTop(guias);
@@ -184,17 +193,22 @@ Juego = {
         juego.world.bringToTop(circulos_08);
         juego.world.bringToTop(circulos_09);
         juego.world.bringToTop(circulos_10);
+        juego.world.bringToTop(tooltip);
 
 
-        var style = { font: '20px Fontdiner Swanky', fontWeight:'bold', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: 500 };
+
+        var style = { font: '30px Changa One', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: 500 };
         puntos=0;
-        txtPuntos_0 = juego.add.text(80, 39, "NIVEL 1", {font: "15px Arial", fill: "red",fontWeight:'bold',stroke:'#000',strokeThickness:1,});
-        txtPuntos_1 = juego.add.text(80, 56, "PUNTAJE:", {font: "12px Arial", fill: "#FFF"});
-        txtPuntos_2 = juego.add.text(80, 70, "0", {font: "12px Arial",  fill: "#FFF",fontWeight:'bold'});
+        //txtPuntos_0 = juego.add.text(80, 39, "NIVEL 1", {font: "15px Arial", fill: "red",fontWeight:'bold',stroke:'#000',strokeThickness:1,});
+        txtPuntos_1 = juego.add.text(50, 60, "PUNTAJE:", {font: "15px Changa One", fill: "red",fontWeight:'bold',stroke:'#000',strokeThickness:1,});
+        txtPuntos_1.anchor.set(0.5);
+        txtPuntos_2 = juego.add.text(47, 78, "0", {font: "20px Changa One", fill: "red",fontWeight:'bold',stroke:'#000',strokeThickness:1,});
+        txtPuntos_2.anchor.set(0.5);
 
-        txtTitulo = juego.add.text(200,35,titulo, style);
+        txtTitulo = juego.add.text(juego.world.width/2,62,titulo, style);
+        txtTitulo.anchor.set(0.5);
 
-        buenoPuntos = juego.add.emitter(96, 30, 10);
+        buenoPuntos = juego.add.emitter(55, 50, 10);
         buenoPuntos.makeParticles(['diamante','particula']);
 
     },
@@ -516,8 +530,8 @@ Juego = {
             circulo.reset(125, 137);
             this.setCirculoMovimiento(circulo);
 
-            bueno = juego.add.emitter(125, 115, 10);
-            this.efectoCirculo(bueno)
+            //bueno = juego.add.emitter(125, 115, 10);
+            //this.efectoCirculo(bueno)
         }
     },
     crearCirculo_02: function () {
@@ -614,43 +628,43 @@ Juego = {
         switch (nota){
             case 1:
                 //juego.add.tween(tecla_do).to({angle:-1},100,Phaser.Easing.Bounce.Out,true).start();
-                shake.shake(5, tecla_do);
+                //shake.shake(5, tecla_do);
                 nota_do.play();
                 break;
             case 2:
-                shake.shake(5, tecla_re);
+                //shake.shake(5, tecla_re);
                 nota_re.play();
                 break;
             case 3:
-                shake.shake(5, tecla_mi);
+                //shake.shake(5, tecla_mi);
                 nota_mi.play();
                 break;
             case 4:
-                shake.shake(5, tecla_fa);
+                //shake.shake(5, tecla_fa);
                 nota_fa.play();
                 break;
             case 5:
-                shake.shake(5, tecla_sol);
+                //shake.shake(5, tecla_sol);
                 nota_sol.play();
                 break;
             case 6:
-                shake.shake(5, tecla_la);
+                //shake.shake(5, tecla_la);
                 nota_la.play();
                 break;
             case 7:
-                shake.shake(5, tecla_si);
+                //shake.shake(5, tecla_si);
                 nota_si.play();
                 break;
             case 8:
-                shake.shake(5, tecla_do1);
+                //shake.shake(5, tecla_do1);
                 nota_do1.play();
                 break;
             case 9:
-                shake.shake(5, tecla_re1);
+                //shake.shake(5, tecla_re1);
                 nota_re1.play();
                 break;
             case 10:
-                shake.shake(5, tecla_mi1);
+                //shake.shake(5, tecla_mi1);
                 nota_mi1.play();
                 break;
         }
